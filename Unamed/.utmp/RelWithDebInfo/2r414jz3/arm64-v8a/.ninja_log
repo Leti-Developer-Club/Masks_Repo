@@ -1,0 +1,23 @@
+# ninja log v5
+11	7920	7695423499225813	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	74db2a12c776addc
+123	3042	7695423450450101	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	3e88ecfaaf288c65
+3044	3505	7695423454459638	E:/01.Unity Projects/HyperForj Studios/Protect Azani/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r414jz3/obj/arm64-v8a/libswappywrapper.so	694f313900319458
+45	6963	7695423489312329	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	510768698b84135b
+24	7751	7695423497470509	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	2af1f8db614895f
+53	7292	7695423492982511	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	d10396a1f8068156
+112	7699	7695423497011736	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	f24cb9d3a1e77821
+1	7643	7695423496423319	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	127522c5f3be067
+39	7657	7695423496533026	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	8e7756f0a32b9ca0
+31	7793	7695423497949229	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	433126ac35548cec
+7920	8064	7695423500711838	E:/01.Unity Projects/HyperForj Studios/Protect Azani/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r414jz3/obj/arm64-v8a/libgame.so	285ecac14f2305f8
+86	1731	7695442127661504	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	3e88ecfaaf288c65
+75	4622	7695442156384698	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	510768698b84135b
+57	4633	7695442156544276	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	8e7756f0a32b9ca0
+60	4635	7695442156554252	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	127522c5f3be067
+81	4683	7695442157022990	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	f24cb9d3a1e77821
+65	4694	7695442157182590	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	d10396a1f8068156
+49	4878	7695442159057558	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	2af1f8db614895f
+70	5176	7695442162129330	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	433126ac35548cec
+53	5223	7695442162608049	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	74db2a12c776addc
+1732	7825	7695442188598550	E:/01.Unity Projects/HyperForj Studios/Protect Azani/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r414jz3/obj/arm64-v8a/libswappywrapper.so	694f313900319458
+5224	7827	7695442188598550	E:/01.Unity Projects/HyperForj Studios/Protect Azani/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r414jz3/obj/arm64-v8a/libgame.so	285ecac14f2305f8
