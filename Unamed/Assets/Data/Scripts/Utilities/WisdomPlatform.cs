@@ -18,7 +18,7 @@ public class WisdomPlatform : MonoBehaviour
     private float nextLeechTime = 0f;
 
     private PointsManager pointsManager;
-    [SerializeField] private SignalTower tower; // assign the correct tower in inspector
+    [SerializeField] private SignalTower tower; // assign the correct shrine in inspector
     [SerializeField, Range(0f, 1f)] private float healPercentOnFill = 0.2f;
 
     private void Start()
@@ -42,7 +42,7 @@ public class WisdomPlatform : MonoBehaviour
 
                 if (currentPlatformPoints >= maxPlatformPoints)
                 {
-                    // 1) heal tower
+                    // 1) heal shrine
                     if (tower != null)
                         tower.HealPercentage(healPercentOnFill);
 

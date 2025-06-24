@@ -150,6 +150,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6084791710652358432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6368530801002140763}
+  m_Layer: 6
+  m_Name: attack point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6368530801002140763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6084791710652358432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.38, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7468525845686356217}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7015146786358647182
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,11 +268,11 @@ GameObject:
   - component: {fileID: 2388723143322199096}
   - component: {fileID: 3734165139021598635}
   - component: {fileID: 5092172612478495819}
-  - component: {fileID: 6154539083662878561}
   - component: {fileID: 2562006971928416586}
   - component: {fileID: 5669230460644823370}
+  - component: {fileID: 6154539083662878561}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Enemy_MeleeType 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,10 +288,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.8898, y: -0.8316, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8758107814667900829}
+  - {fileID: 6368530801002140763}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2388723143322199096
@@ -381,6 +413,44 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.6
+--- !u!114 &2562006971928416586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170492168472530307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdcc67f0d170c34091c16a4ea9c4a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  movementType: 1
+  moveSpeed: 3
+  stopDistance: 3.3
+  attackConfig: {fileID: 11400000, guid: 07d004f8279285b4ca98eac507ac10a2, type: 2}
+  combatType: 0
+  attackPoint: {fileID: 6368530801002140763}
+  firePoint: {fileID: 7468525845686356217}
+--- !u!114 &5669230460644823370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170492168472530307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096b377d4e7210944a0816f3c9d71f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 3798675196050174377, guid: 8dd6009dc97b4df4584ec955381fa577, type: 3}
+  lootList:
+  - {fileID: 11400000, guid: 1b023c9ea21571b45a94fd9970dd5d26, type: 2}
+  - {fileID: 11400000, guid: d564a7f9023c12349a1978ec352db274, type: 2}
+  - {fileID: 11400000, guid: 8049867c7b7a69545b9b4c4ef34c3c54, type: 2}
+  - {fileID: 11400000, guid: ed902e968772e164cbe98473f98f8de4, type: 2}
 --- !u!114 &6154539083662878561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,47 +493,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2562006971928416586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8170492168472530307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cdcc67f0d170c34091c16a4ea9c4a05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  movementType: 1
-  moveSpeed: 3
-  stopDistance: 2
-  attackConfig: {fileID: 11400000, guid: f859b50f0bf977e40996f341859d5583, type: 2}
-  damageInterval: 3
-  damage: 5
-  combatType: 0
-  firePoint: {fileID: 7468525845686356217}
-  fireRate: 1
-  shootingRange: 0
---- !u!114 &5669230460644823370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8170492168472530307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096b377d4e7210944a0816f3c9d71f3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droppedItemPrefab: {fileID: 3798675196050174377, guid: 8dd6009dc97b4df4584ec955381fa577, type: 3}
-  lootList:
-  - {fileID: 11400000, guid: 1b023c9ea21571b45a94fd9970dd5d26, type: 2}
-  - {fileID: 11400000, guid: d564a7f9023c12349a1978ec352db274, type: 2}
-  - {fileID: 11400000, guid: 8049867c7b7a69545b9b4c4ef34c3c54, type: 2}
-  - {fileID: 11400000, guid: ed902e968772e164cbe98473f98f8de4, type: 2}
 --- !u!1 &9172767204754144718
 GameObject:
   m_ObjectHideFlags: 0

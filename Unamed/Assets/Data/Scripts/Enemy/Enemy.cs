@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerController player;
     private Transform currentTarget;
-    private SignalTower tower;
+    private SignalTower shrine;
     private Rigidbody2D rb2;
 
     [Header("Movement")]
@@ -15,17 +15,14 @@ public class Enemy : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private EnemyAttackConfig attackConfig;
-    [SerializeField] private float damageInterval = 1f;
-    [SerializeField] private float damage = 10f;
+    [SerializeField] private CombatType combatType;
+    [SerializeField] private Transform attackPoint;
     private float nextDamageTime;
-    public CombatType combatType;
 
     [Header("Shooting")]
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float shootingRange;
-    private float nextFireTime;
     private bool targetInFiringRange;
+    private float nextFireTime;
 
     public enum MovementType
     {
@@ -53,21 +50,19 @@ public class Enemy : MonoBehaviour
         rb2 = GetComponent<Rigidbody2D>();
         player = FindFirstObjectByType<PlayerController>();
     }
-
     private void Start()
     {
-        tower = FindFirstObjectByType<SignalTower>();
-        if (tower != null)
+        shrine = FindFirstObjectByType<SignalTower>();
+        if (shrine != null)
         {
-            currentTarget = tower.transform;
+            currentTarget = shrine.transform;
         }
     }
-
     private void Update()
     {
-        if (tower == null || !tower.gameObject.activeInHierarchy)
+        if (shrine == null || !shrine.gameObject.activeInHierarchy)
         {
-            FindNewTower();
+            FindNew_Shrine();
         }
 
         HandleCombat();
@@ -83,14 +78,13 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        float distance = Vector2.Distance(transform.position, currentTarget.position);
-
         if (combatType != CombatType.None && Time.time >= nextFireTime)
         {
             TryShoot();
             nextFireTime = Time.time + attackConfig.fireRate;
         }
 
+        float distance = Vector2.Distance(transform.position, currentTarget.position);
         if (distance > stopDistance && !targetInFiringRange)
         {
             Vector2 direction = (currentTarget.position - transform.position).normalized;
@@ -102,22 +96,24 @@ public class Enemy : MonoBehaviour
 
             if (Time.time >= nextDamageTime && !targetInFiringRange)
             {
-                if (currentTarget.CompareTag("SignalTower") && tower != null)
+                Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, stopDistance, attackConfig.meleeAttackableLayer);
+                if (hits.Length > 0)
                 {
-                    tower.TakeDamage(damage);
-                    nextDamageTime = Time.time + damageInterval;
+                    print("attacking player");
+                    hits[0].GetComponent<PlayerController>().KnockBack(transform, attackConfig.knockbackForce);
+                    nextDamageTime = Time.time + attackConfig.damageInterval;
                 }
             }
         }
     }
-    private void FindNewTower()
+    private void FindNew_Shrine()
     {
-        SignalTower[] towers = FindObjectsByType<SignalTower>(FindObjectsSortMode.None);
-        foreach (SignalTower t in towers)
+        SignalTower[] shrines = FindObjectsByType<SignalTower>(FindObjectsSortMode.None);
+        foreach (SignalTower t in shrines)
         {
             if (t.gameObject.activeInHierarchy)
             {
-                tower = t;
+                shrine = t;
                 break;
             }
         }
@@ -158,19 +154,19 @@ public class Enemy : MonoBehaviour
                 return playerTransform;
 
             case MovementType.ToTower:
-                return tower != null ? tower.transform : null;
+                return shrine != null ? shrine.transform : null;
 
             case MovementType.Closest:
-                if (player == null && tower == null) return null;
-                if (player == null) return tower.transform;
-                if (tower == null) return playerTransform;
+                if (player == null && shrine == null) return null;
+                if (player == null) return shrine.transform;
+                if (shrine == null) return playerTransform;
 
                 float distToPlayer = Vector2.Distance(transform.position, playerTransform.position);
-                float distToTower = Vector2.Distance(transform.position, tower.transform.position);
-                return distToPlayer < distToTower ? playerTransform : tower.transform;
+                float distToTower = Vector2.Distance(transform.position, shrine.transform.position);
+                return distToPlayer < distToTower ? playerTransform : shrine.transform;
 
             default:
-                return tower != null ? tower.transform : null;
+                return shrine != null ? shrine.transform : null;
         }
     }
     private void FireProjectileAt(Transform target)

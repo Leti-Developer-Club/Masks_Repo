@@ -15,7 +15,6 @@ public class AutoLockOnShooter : MonoBehaviour
 
     [Header("Shooting Stuff")]
     [SerializeField] private float gunOffsetDistance = 1f;
-    [SerializeField] private float circleRangeOffset = 2f;
     [SerializeField] private float bulletSpeed = 10f; 
     [SerializeField] private float lockOnRange = 10f;
     [SerializeField] private float fireRate = 0.5f;
@@ -27,7 +26,6 @@ public class AutoLockOnShooter : MonoBehaviour
     [SerializeField] private float timeBtwAttacks = 0.25f;
     [SerializeField] private List<GameObject> hitVFXList;
     [SerializeField] private Transform attackTransform;
-    [SerializeField] private bool isAttacking = false;
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float damageAmount = 1f;
 
@@ -37,8 +35,6 @@ public class AutoLockOnShooter : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-  
-
         Gizmos.DrawWireSphere(attackTransform.position, attackRange);
     }
 
@@ -47,7 +43,7 @@ public class AutoLockOnShooter : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         timeSinceAttack = timeBtwAttacks;
     }
-    void Update()
+    private void Update()
     {
         timeSinceAttack += Time.deltaTime;
         Shoot_ClosestEnemy();

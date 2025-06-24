@@ -5,36 +5,34 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+    [Header("UI Shandis")]
+    [SerializeField] private TMP_Text timeToNextWave;
+
     [Header("Enemy Types")]
     [Tooltip("Drag allEnemies possible enemy prefabs here")]
     public List<GameObject> allEnemyPrefabs;
 
     [Header("Platform Setup")]
-    [Tooltip("All platforms that must be filled to win")]
-    public List<WisdomPlatform> platforms;
-
-    [Header("Spawn Points")]
-    public List<Transform> spawnPoints;
+    [Tooltip("All shrines that must be filled to win")]
+    public List<WisdomPlatform> shrines;
 
     [Header("Wave Settings")]
-    [SerializeField] private int baseTypeCount = 3;
-    [SerializeField] private int typeCountIncrementPerWave = 1;
+    public List<Transform> spawnPoints;
     [SerializeField] private int baseMaxEnemies = 5;
-    [SerializeField] private int maxEnemiesIncrementPerWave = 2;
+    [SerializeField] private int baseEnemyType_Count = 3;
     [SerializeField] private float breakBetweenWaves = 5f;
+    [SerializeField] private int typeCountIncrementPerWave = 1;//increase the types of enemies spawned per wave
+    [SerializeField] private int maxEnemiesIncrementPerWave = 2;
 
     private int waveIndex = 0;
     private int currentMaxTypes;
     private int currentMaxEnemies;
     private bool spawning = false;
-    public BreakOverlayManager breakOverlayManager;
-
-    [Header("UI Shandis")]
-    [SerializeField] private TMP_Text timeToNextWave;
+    //public BreakOverlayManager breakOverlayManager;
 
     private void Start()
     {
-        foreach (var p in platforms)
+        foreach (var p in shrines)
             p.onPlatformFull.AddListener(PlatformFull_StopSpawning);//when platform is full stop spawning
 
         StartCoroutine(WaveRoutine());
@@ -56,9 +54,9 @@ public class WaveSpawner : MonoBehaviour
     {
         while (true)
         {
-            // check win
+            // check if all the shrines are full of souls
             bool allFull = true;
-            foreach (var p in platforms)
+            foreach (var p in shrines)
             {
                 if (p == null || !p.IsFull)
                 {
@@ -72,11 +70,11 @@ public class WaveSpawner : MonoBehaviour
             }
 
             // wave settings
-            currentMaxTypes = baseTypeCount + waveIndex * typeCountIncrementPerWave;
+            currentMaxTypes = baseEnemyType_Count + waveIndex * typeCountIncrementPerWave;
             currentMaxEnemies = baseMaxEnemies + waveIndex * maxEnemiesIncrementPerWave;
 
             spawning = true;
-            List<GameObject> waveTypes = PickRandomTypes(currentMaxTypes);
+            List<GameObject> waveTypes = PickRandom_EnemyTypes(currentMaxTypes);
 
             // spawn loop
             while (spawning)
@@ -84,13 +82,13 @@ public class WaveSpawner : MonoBehaviour
                 // count and cleanup
                 int activeEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
                 if (activeEnemies < currentMaxEnemies)
-                    SpawnOne(waveTypes);
+                    SpawnOne_Enemy(waveTypes);
 
                 yield return null;
             }
 
             timeToNextWave.gameObject.SetActive(true);
-            breakOverlayManager.StartBreakOverlay(3f);
+            //breakOverlayManager.StartBreakOverlay(3f);
             float timer = breakBetweenWaves;
             while (timer > 0f)
             {
@@ -105,7 +103,7 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private List<GameObject> PickRandomTypes(int count)
+    private List<GameObject> PickRandom_EnemyTypes(int count)
     {
         List<GameObject> result = new List<GameObject>();
         var pool = new List<GameObject>(allEnemyPrefabs);
@@ -118,11 +116,11 @@ public class WaveSpawner : MonoBehaviour
         return result;
     }
 
-    private void SpawnOne(List<GameObject> types)
+    private void SpawnOne_Enemy(List<GameObject> enemyTypes)
     {
-        if (types.Count == 0 || spawnPoints.Count == 0) return;
+        if (enemyTypes.Count == 0 || spawnPoints.Count == 0) return;
 
-        var prefab = types[Random.Range(0, types.Count)];
+        var prefab = enemyTypes[Random.Range(0, enemyTypes.Count)];
         var spawn = spawnPoints[Random.Range(0, spawnPoints.Count)];
         Instantiate(prefab, spawn.position, Quaternion.identity);
     }

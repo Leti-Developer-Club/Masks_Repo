@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Movement Settings")]
+    public bool isKnockbacked = false;
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
     [SerializeField, Range(0f, 100f)] private float moveSpeed = 5f;
     [SerializeField, Range(0f, 100f)] private float maxAcceleration = 35f;
@@ -25,9 +26,24 @@ public class PlayerController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         inputManager = GetComponent<InputManager>();
     }
-
     private void Update()
     {
+        float cappedSpeed = Mathf.Min(moveSpeed, maxSpeed);
+        desiredVelocity = inputManager.MovementInput.normalized * cappedSpeed;
+        desiredVelocity = new Vector2(inputManager.MovementInput.x, inputManager.MovementInput.y) * Mathf.Max(cappedSpeed, 0f);
+    }
+
+    private void FixedUpdate()
+    {
+        if(isKnockbacked != true)
+        {
+            PlayerMovement();
+        }
+    }
+
+    private void PlayerMovement()
+    {
+        #region Flip Char
         if (inputManager.MovementInput.x > 0)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
@@ -36,22 +52,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
-
-        float cappedSpeed = Mathf.Min(moveSpeed, maxSpeed);
-        desiredVelocity = inputManager.MovementInput.normalized * cappedSpeed;
-
-        desiredVelocity = new Vector2(inputManager.MovementInput.x, inputManager.MovementInput.y) * Mathf.Max(cappedSpeed, 0f);
+        #endregion
+        #region Move Animations
         anim.SetFloat("DirectionX", Mathf.Abs(desiredVelocity.x), 0.1f, Time.deltaTime);
         anim.SetFloat("DirectionY", Mathf.Abs(desiredVelocity.y), 0.1f, Time.deltaTime);
-    }
+        #endregion
 
-    private void FixedUpdate()
-    {
-        PlayerMovement();
-    }
-
-    private void PlayerMovement()
-    {
         currentVelocity = rb.linearVelocity;
         maxSpeedChange = maxAcceleration * Time.fixedDeltaTime;
 
@@ -59,5 +65,11 @@ public class PlayerController : MonoBehaviour
         currentVelocity.y = Mathf.MoveTowards(currentVelocity.y, desiredVelocity.y, maxSpeedChange);
 
         rb.linearVelocity = currentVelocity;
+    }
+    public void KnockBack(Transform enemy, float force)
+    {
+        isKnockbacked = true;
+        Vector2 direction = (transform.position - enemy.position).normalized;
+        rb.linearVelocity = direction * force;
     }
 }
